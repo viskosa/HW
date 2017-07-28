@@ -13,25 +13,22 @@
 
 <script type="text/javascript">
 	var counter = document.getElementById("counter");
-
-	for (var start=0; start<30; start++) {
-		(function myCounter(index) {
-			setTimeout(function(){counter.innerHTML = index}, 500);
-		})(start);
-	}
+	var start=0;
 	
-	/*(function myCounter() {
-		setTimeout(function () {
+	/*for (var start=0; start<30; start++) {*/
+	/*var f = (function myCounter(index) {
+			setTimeout(function(){
+				index++;
+			}, 500);
+			return(index);
 
+	counter.innerHTML = f;*/
+	function myCounter(){
+		startCount = setInterval(function() {
 			start++;
-			myCounter();
-			
+			counter.innerHTML=start;
 		}, 500);
-	}*/
-
-/*counter.innerHTML=start;
-		)();
-	*/
+	};
 
 </script>
 </body>
