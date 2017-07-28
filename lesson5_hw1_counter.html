@@ -1,0 +1,38 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Homework</title>
+</head>
+<body>
+<!--     Создайте счетчик, который начинает отчет с 1 и заканчивается на 30, также добавьте кнопки который останавливают отчет, и запускают его заново и добавьте кнопку обнуляющую отчет. Также попробуйте изменить код так чтобы отчет начинался с 30 и заканчивался на 1. -->
+<div id="counter"></div>
+<button onclick="stopCountFunc">Остановить счет</button>
+<button onclick="startCountFunc">Запустить счет</button>
+<button onclick="clearCountFunc">Обнулить счет</button>
+
+<script type="text/javascript">
+	var counter = document.getElementById("counter");
+
+	for (var start=0; start<30; start++) {
+		(function myCounter(index) {
+			setTimeout(function(){counter.innerHTML = index}, 500);
+		})(start);
+	}
+	
+	/*(function myCounter() {
+		setTimeout(function () {
+
+			start++;
+			myCounter();
+			
+		}, 500);
+	}*/
+
+/*counter.innerHTML=start;
+		)();
+	*/
+
+</script>
+</body>
+</html>

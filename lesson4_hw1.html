@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Id and classes</title>
+    <style>
+        /* #id1 {
+            color: red;
+        }
+        .class1 {
+            color: blue;
+            font-size: 14px;
+            text-decoration: underline;
+        }
+        div > div.class1{
+            color: blue;
+            font-size: 14px;
+            text-decoration: underline;
+        } */
+        .newclass {
+            background-color: yellowgreen;
+            border: 1px dotted orange;
+        }
+    </style>
+</head>
+<body>
+
+    <h1 class="class1" style = "color: yellow" id="id1">
+        Title
+    </h1>
+
+    <div>
+        <div class="class1">
+            Содержимое дива
+        </div>
+    </div>
+
+     <div>
+        <div class="class1">
+            Содержимое дива
+        </div>
+    </div>
+
+
+    <script type="text/javascript">
+
+    /* 1 - ПЕРЕПИСЫВАНИЕ CSS-СВОЙСТВ С ПОМОЩЬЮ РАЗНЫХ МЕТОДОВ И СВОЙСТВ*/
+
+
+        /*var colorRed = document.getElementById('id1');
+        colorRed.style.color='red';*/
+
+
+
+        var class1 = document.querySelector('.class1');
+        class1.style.cssText = "color: brown; font-size: 14px; text-decoration: underline; margin-top: 10px; background: red;"
+
+
+
+        /*var class1 = document.querySelector('.class1');
+        class1.style.color = 'blue'; 
+        class1.style.fontSize = '14px'; 
+        class1.style.textDecoration = 'underline';*/
+
+
+
+
+        //var class1 = document.querySelectorAll('.class1');
+
+        //    for (var i = 0; i < class1.length; i++) {
+        //        class1[i].style.cssText = "color: green; font-size: 14px; text-decoration: underline;"
+        //    };
+
+
+
+
+        /* var class1 = document.getElementsByClassName('class1'); /*здесь класс без точки!!!*/
+
+        /*   for (var i = 0; i < class1.length; i++) {
+               class1[i].style.cssText = "color: pink; font-size: 14px; text-decoration: underline;"
+           };*/
+
+
+        /*ДОБАВЛЕНИЕ НОВОГО КЛАССА newclass*/
+
+           /*var newClass = document.querySelector('.class1');
+           newClass.classList.add('newclass');
+           console.log(newClass.style);   выведет только стиль из атрибута тега, в котором написан класс newclass
+           var computedStyle = window.getComputedStyle(newClass);
+           console.log(computedStyle);*/
+
+
+         
+
+    </script>
+
+
+</body>
+</html>
