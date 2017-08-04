@@ -65,7 +65,7 @@
 				span[i].addEventListener('mouseenter', display);
 				span[i].addEventListener('mouseleave', hide);
 
-        var spanWidth = span[i].clientWidth;
+        var spanWidth = span[i].clientWidth; // берется последнее значение i , а не каждое!!!
         console.log ('ширина спана spanWidth = ' + spanWidth);
 
       //});(i);
