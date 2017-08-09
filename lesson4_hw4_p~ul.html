@@ -1,0 +1,118 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Prev+Next</title>
+    <!-- <style>
+        div + p {
+            background-color: yellow;
+        }
+        p ~ ul {
+            background: #ff0000;
+        }
+    </style> -->
+</head>
+<body>
+    <h1>Главная</h1>
+
+    <div>
+        <h2>Заголовок</h2>
+        <p> p in div Lorem ipsum dolor sit amet, consectetur adipisicing elit. Harum, quas, officiis soluta, eligendi perspiciatis dolore inventore consequuntur possimus dolores cupiditate provident id repudiandae consequatur nobis veniam, excepturi impedit consectetur eos!</p>
+    </div>
+    <ul>
+        <li>не должен Чай</li>
+        <li>Кофе</li>
+        <li>Молоко</li>
+    </ul>
+    <p>должен покраситься div+p1 Lorem ipsum dolor sit amet, consectetur adipisicing elit. Harum, quas, officiis soluta, eligendi perspiciatis dolore inventore consequuntur possimus dolores cupiditate provident id repudiandae consequatur nobis veniam, excepturi impedit consectetur eos!</p>
+    <ul>
+        <li>1 должен Чай</li>
+        <li>Кофе</li>
+        <li>Молоко</li>
+    </ul>
+    <p>p2 Lorem ipsum dolor sit amet, consectetur adipisicing elit. Harum, quas, officiis soluta, eligendi perspiciatis dolore inventore consequuntur possimus dolores cupiditate provident id repudiandae consequatur nobis veniam, excepturi impedit consectetur eos!</p>
+    <span>Строк </span>
+
+    <div>div Lorem ipsum dolor sit amet, consectetur adipisicing elit. Vero praesentium quasi laudantium ipsam. Aperiam dicta sunt pariatur repudiandae minima, cum cumque minus blanditiis voluptate quaerat reiciendis a magni quos impedit?
+    <p>p in div dkljg;shga</p>
+    <ul>
+        <li>-1 должен Чай</li>
+        <li>Кофе</li>
+        <li>Молоко</li>
+    </ul>
+    <ul>
+        <li>0 должен Чай</li>
+        <li>Кофе</li>
+        <li>Молоко</li>
+    </ul>
+    </div>
+    <p>должен покраситься div+p p in div dkljg;shga</p>
+
+    <ul>
+        <li>1 должен Чай</li>
+        <li>Кофе</li>
+        <li>Молоко</li>
+    </ul>
+
+    <p>p3 Lorem ipsum dolor sit amet, consectetur adipisicing elit. Animi minima perspiciatis dolor cumque quo eum molestias necessitatibus ipsam dolorum molestiae inventore atque iure recusandae fugiat fugit beatae ad nemo, totam.</p>
+    <ul>
+        <li>2 должен Чай</li>
+        <li>Молоко</li>
+        <li>Кофе</li>
+    </ul>
+    <ul>
+        <li>3 должен Чай</li>
+        <li>Молоко</li>
+        <li>Кофе</li>
+    </ul>
+    <ul>
+        <li>4 должен Чай</li>
+        <li>Молоко</li>
+        <li>Кофе</li>
+    </ul>
+
+    <h2>Another list</h2>
+    <ul>
+        <li>не должен Кофе</li>
+        <li>Чай</li>
+        <li>Молоко</li>
+    </ul>
+
+
+    <script type="text/javascript">
+        /*var div = document.getElementsByTagName('div');  берет первого ребенка, проверяет, параграф ли он и красит его в красный
+            for (i=0; i<div.length; i++) {
+
+                var next = div[i].firstElementChild;
+                console.log(next === null);
+                    if (next !== null && next.matches('p')) {
+                        next.style.color = 'red';
+                    };
+            }*/
+
+        var div = document.querySelectorAll('div');
+
+            for (i=0; i<div.length; i++) {
+                 var next = div[i].nextElementSibling;
+                 //console.log(next);
+                    if (next.tagName == 'P') {
+                        next.style.color = 'blue';
+                    };
+            };
+
+
+        var allP = document.querySelectorAll('p');
+            for (i=0; i<allP.length; i++) {
+                var afterP = allP[i].nextElementSibling;
+                console.log(afterP);
+
+                while (afterP!==null && afterP.tagName == 'UL') {
+                    afterP.style.color = 'red';
+                    afterP = afterP.nextElementSibling;
+                }
+            };
+
+    </script>
+
+</body>
+</html>
