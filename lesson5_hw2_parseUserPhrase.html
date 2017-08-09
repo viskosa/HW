@@ -1,0 +1,69 @@
+﻿<!-- 
+    Запросите у пользователя ввести какую-то фразу. Отобразите каждое отдельное слово в виде списка ul li. Также отобразите первое слово UPPERCASE, а последние 2 с маленькой. Найдите все буквы "а" их количество выведите в модальное окно.
+ -->
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Homework</title>
+    <style type="text/css">
+    	ul {
+			border: 1px solid #000;
+			padding: 5px 0;
+    	}
+    	li {
+    		border: 1px solid red;
+    		padding: 3px 0;
+    		margin-bottom: 2px;
+    	}
+    </style>
+</head>
+<body>
+
+<script type="text/javascript">
+	var phrase = prompt('Введите какую-нибудь фразу',''),
+		substr = phrase.split(' '), //возвращает массив из слов
+		//console.log(substr),
+		ul = document.createElement('ul'),
+		body = document.querySelector('body');
+
+		body.appendChild(ul);
+
+	for (i=0; i<substr.length; i++) {
+		var li = document.createElement('li');
+		ul.appendChild(li);
+		li.innerHTML = substr[i];  //создаем li по количеству слов и засовываем слова в li
+	}
+
+	var first = ul.children[0].innerHTML.toUpperCase(); //берем содержимое первого ребенка и переводим в апперкейс
+	ul.children[0].innerHTML = first; // в первого ребенка засовываем то, что перевели в апперкейс
+
+	var last = ul.children[ul.children.length -1].innerHTML.toLowerCase(); //берем содержимое последнего ребенка и переводим в ловеркейс
+		ul.children[ul.children.length -1].innerHTML = last;// в последнего ребенка засовываем то, что перевели в ловеркейс
+
+	var prev = ul.children[ul.children.length -2].innerHTML.toLowerCase(); //берем содержимое предпоследнего ребенка и переводим в ловеркейс
+	ul.children[ul.children.length -2].innerHTML = prev;// в предпоследнего ребенка засовываем то, что перевели в ловеркейс
+
+	//считем все буквы "а" во введенной фразе
+
+	var a = 0,
+		b = 0,
+		phraseLow = phrase.toLowerCase(); //всю фразу переводим в ловеркейс
+
+		for(var i=0; i<phraseLow.length; i++) {
+			if (phraseLow[i].indexOf('а') !=-1) { //проверка на русские буквы а
+				a++;
+			}
+		}
+		for(var i=0; i<phraseLow.length; i++) {
+			if (phraseLow[i].indexOf('a') !=-1) { //проверка на английские буквы а
+				b++;
+			}
+		}
+		var sum = a+b;
+	alert('В этой фразе содержится ' + sum + ' букв "a"');
+	
+
+</script>
+</body>
+</html>
