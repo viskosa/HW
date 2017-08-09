@@ -21,15 +21,16 @@
 <script type="text/javascript">
 	var counter = document.getElementById("counter");
 	var inner=1;
-	var start;
+	//var start;
 
 	function startCountFunc() {
+		//while(inner<30) {
 		start = setTimeout(function(){
 			counter.innerHTML=inner;
 			inner++;
 			startCountFunc();
-			
-		}, 500);//end of setTimeout
+		}, 500);  //end of setTimeout
+	//}; // end of while
 	};
 
 	function stopCountFunc (){
@@ -47,12 +48,3 @@
 </body>
 </html>
 
-<!-- secondCounter();
-	function secondCounter () {
-		startCounter = setInterval(function(){
-			while (second<30) {
-			second++;
-			console.log(1);
-			counter.innerHTML = second;};
-		}, 1000);//end of setInterval
-	}; -->
