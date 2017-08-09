@@ -21,14 +21,15 @@
 <script type="text/javascript">
 	var counter = document.getElementById("counter");
 	var inner=1;
-	//var start;
 
 	function startCountFunc() {
-		//while(inner<30) {
+		//while(inner<30) {  с while не работает, зависает нафик все
 		start = setTimeout(function(){
 			counter.innerHTML=inner;
 			inner++;
+			if (inner<=30) {
 			startCountFunc();
+			}; //end of if
 		}, 500);  //end of setTimeout
 	//}; // end of while
 	};
@@ -42,6 +43,25 @@
 		inner = 0;
 		counter.innerHTML = inner;
 	}
+
+//for counting from 30 to 1:
+
+	/*var inner = 30;
+	function startCountFunc() {
+		start = setTimeout(function(){
+			counter.innerHTML=inner;
+			inner--;
+			if (inner>=1) {
+			startCountFunc();
+			}; //end of if
+		}, 500);  //end of setTimeout
+	};
+
+	function clearCountFunc (){
+		clearTimeout(start);
+		inner = 30;
+		counter.innerHTML = inner;
+	}*/
 
 
 </script>
