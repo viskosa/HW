@@ -1,0 +1,110 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<style type="text/css">
+		button {
+			display: block;
+			margin-bottom: 5px;
+		}
+		.active {
+			color:red;
+			border: 2px solid red;
+		}
+	</style>
+</head>
+<body>
+	<ul>
+		<li>first element</li>
+		<li>second element</li>
+		<li>third element</li>
+		<li>fourth element</li>
+		<li>fifth element</li>
+		<li>sixth element</li>
+		<li>seventh element</li>
+	</ul>
+	<button id="button1">Выбрать первый элемент</button>
+	<button id="button2">Выбрать последний элемент</button>
+	<button id="button3">Выбрать следующий элемент</button>
+	<button id="button4">Выбрать предыдущий элемент</button>
+	<button id="button5">Добавить элемент</button>
+	<button id="button6">Удалить элемент</button>
+	<button id="button7">Добавить в начало</button>
+
+	<script type="text/javascript">
+		var ul = document.querySelector('ul'),
+			button1 = document.querySelector('#button1'),
+			button2 = document.querySelector('#button2'),
+			button3 = document.querySelector('#button3'),
+			button4 = document.querySelector('#button4'),
+			button5 = document.querySelector('#button5'),
+			button6 = document.querySelector('#button6'),
+			button7 = document.querySelector('#button7');
+
+			button1.addEventListener('click', selectFirstElement);
+			button2.addEventListener('click', selectLastElement);
+			button3.addEventListener('click', selectNextElement);
+			button4.addEventListener('click', selectPreviousElement);
+			button5.addEventListener('click', addElement);
+			button6.addEventListener('click', removeElement);
+			button7.addEventListener('click', addElementAtStart);
+
+			function selectFirstElement(){
+				clearStyles();
+				ul.firstElementChild.setAttribute('class', 'active')
+			};
+
+			function selectLastElement(){
+				clearStyles();
+				ul.lastElementChild.setAttribute('class', 'active')
+			};
+			function selectNextElement(){
+				var active = document.querySelector('.active');
+				if (!active) {
+					ul.firstElementChild.setAttribute('class', 'active')
+				} else {
+					clearStyles();
+					active.nextElementSibling.setAttribute('class', 'active');
+				};
+			}
+
+			function selectPreviousElement(){
+				var active = document.querySelector('.active');
+				if (!active) {
+					ul.lastElementChild.setAttribute('class', 'active')
+				} else {
+					clearStyles();
+					active.previousElementSibling.setAttribute('class', 'active');
+				};
+			}
+
+			function addElement(){
+				var newElement = document.createElement('li');
+				newElement.innerHTML = 'new element';
+				ul.appendChild(newElement);
+			}
+
+			function removeElement(){
+				var lastChild = ul.lastElementChild; 
+				ul.removeChild(lastChild);
+			}
+
+			function addElementAtStart(){
+				var newElement = document.createElement('li'),
+					firstElement = ul.firstElementChild;
+
+				newElement.innerHTML = 'new element';
+				ul.insertBefore(newElement, firstElement);
+			}
+
+			function clearStyles(){
+				var allChildren = ul.children;
+				for (i=0; i<allChildren.length; i++) {
+					if (allChildren[i].hasAttribute('class')){
+						allChildren[i].removeAttribute('class');
+					};
+				};
+			}
+	</script>
+</body>
+</html>
