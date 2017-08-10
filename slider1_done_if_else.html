@@ -1,0 +1,102 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<style>
+	.main {
+		width:200px;
+		height:200px;
+		background-color: brown;
+		border: 1px solid red;
+		overflow: hidden;
+	}
+	ul {
+		position: relative;
+		background-color: yellow;
+		padding: 0;
+		margin: 0;
+		width: 1500px;
+		border: 1px dashed blue;
+	}
+	ul:after {
+		display: block;
+		content:'';
+		height:0;
+		clear: both;
+	}
+	li {
+		width: 200px;
+		height: 200px;
+		background-color: green;
+		display: inline-block;
+		font-size: 24px;
+		color: #fff;
+		float:left;
+	}
+	li+li {
+		background: yellowgreen;
+	}
+	li+li+li {
+		background: pink;
+	}
+	li+li+li+li {
+		background: orange;
+	}
+	li+li+li+li+li {
+		background: #ccc;
+	}
+	input {
+		margin-top: 10px;
+	}
+
+	
+	</style>
+</head>
+<body>
+	<div class="main">
+		<ul>
+			<li>1</li>
+			<li>2</li>
+			<li>3</li>
+			<li>4</li>
+			<li>5</li>
+		</ul> 
+	</div>
+	<input type="button" value="NEXT" oncklick='myFunction'>
+
+
+	<script>
+	(function(){
+	var ul = document.querySelector('ul'),
+		allChildrenCount = ul.children.length,//5
+		width = ul.firstElementChild.clientWidth,
+		commonChildrenWidth = allChildrenCount*width,//1000
+		limit = - (commonChildrenWidth - width),//максимум пикселей, на сколько можно подвинуть
+		button = document.querySelector('input'),
+		move;
+
+
+		button.addEventListener('click', handler);
+		
+		function handler(){
+			if (move==limit){
+				console.log('end of ul');
+				return;
+			};
+			if (ul.hasAttribute('style')) {
+				move = parseInt(ul.style.left) - width;
+				moveFunc();
+			} else {
+				move = -width;
+				moveFunc();
+			}
+		};
+
+		function moveFunc() {
+			ul.style.cssText = "left:"+ move +'px;';
+		}
+	
+	})();
+	</script>
+</body>
+</html>
