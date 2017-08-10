@@ -1,0 +1,77 @@
+﻿<!DOCTYPE html>
+<html >
+<head>
+    <meta charset="UTF-8">
+    <title>Homework</title>
+    <style type="text/css">
+    	p {
+    		padding: 10px 0;
+    		border: 1px solid blue;
+    		margin: 10px 0;
+    	}
+    </style>
+</head>
+<body>
+    <!-- Создайте 5 блоков с текстом. Добавьте в каждый из блоков кнопку для его удаления. Используйте только один обработчик. -->
+    <p>1 Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+    tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+    quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+    consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
+    cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
+    proident, sunt in culpa qui officia deserunt mollit anim id est laborum.<br/>
+    <button id = 'firstButton'>Очистить первый блок</button>
+    </p>
+
+    <p>2 Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+    tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+    quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+    consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
+    cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
+    proident, sunt in culpa qui officia deserunt mollit anim id est laborum.<br/>
+    <button id = 'secondButton'>Очистить второй блок</button>
+    </p>
+
+    <p>3 Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+    tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+    quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+    consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
+    cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
+    proident, sunt in culpa qui officia deserunt mollit anim id est laborum.<br/>
+    <button id = 'thirdButton'>Очистить третий блок</button>
+    </p>
+
+    <p>4 Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+    tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+    quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+    consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
+    cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
+    proident, sunt in culpa qui officia deserunt mollit anim id est laborum.<br/>
+    <button id = 'fourthButton'>Очистить четвертый блок</button>
+    </p>
+
+    <p>5 Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+    tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+    quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+    consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
+    cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
+    proident, sunt in culpa qui officia deserunt mollit anim id est laborum.<br/>
+    <button id = 'fifthButton'>Очистить пятый блок</button>
+    </p>
+
+    <script type="text/javascript">
+    	var p = document.querySelectorAll('p');
+
+			for (i=0; i<p.length; i++) {
+
+				p[i].addEventListener('click', clickFunc);
+
+				function clickFunc(){
+    				var target = event && event.target || event.srcElement;
+    				target.parentNode.style.display = 'none';
+    			};
+			}
+  		
+
+   	</script>
+</body>
+</html>
