@@ -1,0 +1,138 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<style>
+	.main {
+		width:200px;
+		height:200px;
+		background-color: brown;
+		border: 1px solid red;
+		overflow: hidden;
+		margin-left: 300px;
+	}
+	ul {
+		position: relative;
+		background-color: yellow;
+		padding: 0;
+		margin: 0;
+		/* width: 1500px; */
+		border: 1px dashed blue;
+		/* transform: translateX(-200px); */
+	}
+	ul:after {
+		display: block;
+		content:'';
+		height:0;
+		clear: both;
+	}
+	li {
+		width: 200px;
+		height: 200px;
+		display: inline-block;
+		font-size: 24px;
+		color: #fff;
+		float:left;
+	}
+
+	.li_1 {
+		background: green;
+	}
+	.li_2 {
+		background: yellowgreen;
+	}
+	.li_2 {
+		background: pink;
+	}
+	.li_3 {
+		background: orange;
+	}
+	.li_4 {
+		background: #ccc;
+	}
+	.button-wrapper {
+		padding-top: 10px;
+		width: 200px;
+		text-align: center;
+	}
+
+	
+	</style>
+</head>
+<body>
+	<div class="main">
+		<ul>
+			<li class = "li_1">1</li>
+			<li class = "li_2">2</li>
+			<li class = "li_3">3</li>
+			<li class = "li_4">4</li>
+			<li class = "li_5">5</li>
+		</ul> 
+	</div>
+	<div class = "button-wrapper">
+		<button data-controls = 'prev'>PREV</button>
+		<button data-controls = 'next'>NEXT</button>
+	</div>
+	
+
+
+	<script>
+	//(function(){
+
+		var ul = document.querySelector('ul'),
+			width = ul.firstElementChild.clientWidth, // ширина одного ребенка
+			count = ul.children.length, // 5 детей
+			ulWidth = width * (count + 1); // 1200
+			buttonWrap = document.querySelector('.button-wrapper');
+
+			ul.style.width = ulWidth + 'px'; // присваиваем для ul ширину
+			buttonWrap.addEventListener('click', handler); // вешаем обработчик на родительский для кнопок див
+
+			/*через insertAdjacentElement все отлично работает без сдвигов*/
+
+			/*function handler(e) {
+				var target = e && e.target || e.srcElement;
+				if (target.getAttribute('data-controls') == 'next') {
+					
+					var cloneFirst = ul.firstElementChild;
+					ul.insertAdjacentElement('beforeEnd', cloneFirst)
+				};
+
+				if (target.getAttribute('data-controls') == 'prev') {
+
+					var cloneLast = ul.lastElementChild;
+					ul.insertAdjacentElement('afterBegin', cloneLast);
+				}
+			}*/
+
+			/*через клонирование первого элемента и сдвиг с помощью translate*/
+
+			function handler(e) {
+				var target = e && e.target || e.srcElement;
+				if (target.getAttribute('data-controls') == 'next') {
+					
+					var cloneFirst = ul.firstElementChild;
+					var a = -width+'px';
+					//ul.style.height = a;
+					ul.style.transform = 'translateX(a)';
+					console.log(a);
+
+					//transform: translateX(-200px);
+				};
+
+
+
+
+
+
+				if (target.getAttribute('data-controls') == 'prev') {
+
+					var cloneLast = ul.lastElementChild;
+					ul.insertAdjacentElement('afterBegin', cloneLast);
+				}
+			}
+
+	//})();
+	</script>
+</body>
+</html>
