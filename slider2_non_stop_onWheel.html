@@ -1,0 +1,117 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<style>
+	.main {
+		width:200px;
+		height:200px;
+		background-color: brown;
+		border: 1px solid red;
+		overflow: hidden;
+	
+	}
+	ul {
+		position: relative;
+		background-color: yellow;
+		padding: 0;
+		margin: 0;
+		border: 1px dashed blue;
+	}
+	ul:after {
+		display: block;
+		content:'';
+		height:0;
+		clear: both;
+	}
+	li {
+		width: 200px;
+		height: 200px;
+		display: inline-block;
+		font-size: 24px;
+		color: #fff;
+		float:left;
+	}
+
+	.li_1 {
+		background: green;
+	}
+	.li_2 {
+		background: yellowgreen;
+	}
+	.li_3 {
+		background: pink;
+	}
+	.li_4 {
+		background: orange;
+	}
+	.li_5 {
+		background: #ccc;
+	}
+	.button-wrapper {
+		padding-top: 10px;
+		width: 200px;
+		text-align: center;
+	}
+
+	
+	</style>
+</head>
+<body>
+	<div class="main">
+		<ul>
+			<li class = "li_1">1</li>
+			<li class = "li_2">2</li>
+			<li class = "li_3">3</li>
+			<li class = "li_4">4</li>
+			<li class = "li_5">5</li>
+		</ul> 
+	</div>
+	<!-- <div class = "button-wrapper">
+		<button data-controls = 'prev'>PREV</button>
+		<button data-controls = 'next'>NEXT</button>
+	</div> -->
+
+	<script>
+
+	/*работает и без ограничителя*/
+	
+	(function(){
+
+		var main  = document.querySelector('.main'),
+			ul = document.querySelector('ul'),
+			width = ul.firstElementChild.clientWidth,
+			count = ul.children.length,
+			ulWidth = (count + 1) * width;
+
+			ul.style.width = ulWidth + "px";
+
+
+			main.addEventListener("wheel", onWheel);
+
+			function onWheel(e) {
+					e = e || window.event,
+					delta = e.deltaY;
+					console.log(delta);
+
+					if (delta < 0 ) { // если прокрутка вверх
+						ul.style.transform = 'translateX(' + - width + 'px'; //то двигаем слайдер влево
+						var cloneFirst = ul.firstElementChild.cloneNode(true);
+						ul.appendChild(cloneFirst);
+						ul.removeChild(ul.firstElementChild);
+						ul.style.transform = 'translateX(' + (- width + width ) + 'px';
+					}
+
+					if (delta > 0) { //если прокрутка вниз
+						var cloneLast = ul.lastElementChild.cloneNode(true); //то двигаем слайдер вправо
+						ul.style.transform = 'translateX(' + width + 'px)';
+						ul.insertBefore(cloneLast, ul.firstElementChild);
+						ul.removeChild(ul.lastElementChild);
+						ul.style.transform = 'translateX(' + (-width + width) + 'px)';
+					}
+			}
+
+	})();
+	</script>
+</body>
+</html>
