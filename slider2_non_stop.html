@@ -9,16 +9,14 @@
 		background-color: brown;
 		border: 1px solid red;
 		overflow: hidden;
-		margin-left: 300px;
+	
 	}
 	ul {
 		position: relative;
 		background-color: yellow;
 		padding: 0;
 		margin: 0;
-		/* width: 1500px; */
 		border: 1px dashed blue;
-		/* transform: translateX(-200px); */
 	}
 	ul:after {
 		display: block;
@@ -41,13 +39,13 @@
 	.li_2 {
 		background: yellowgreen;
 	}
-	.li_2 {
+	.li_3 {
 		background: pink;
 	}
-	.li_3 {
+	.li_4 {
 		background: orange;
 	}
-	.li_4 {
+	.li_5 {
 		background: #ccc;
 	}
 	.button-wrapper {
@@ -73,11 +71,9 @@
 		<button data-controls = 'prev'>PREV</button>
 		<button data-controls = 'next'>NEXT</button>
 	</div>
-	
-
 
 	<script>
-	//(function(){
+	(function(){
 
 		var ul = document.querySelector('ul'),
 			width = ul.firstElementChild.clientWidth, // ширина одного ребенка
@@ -87,6 +83,29 @@
 
 			ul.style.width = ulWidth + 'px'; // присваиваем для ul ширину
 			buttonWrap.addEventListener('click', handler); // вешаем обработчик на родительский для кнопок див
+
+			/*через клонирование первого элемента и сдвиг с помощью translate*/
+
+			function handler(e) {
+				var target = e && e.target || e.srcElement;
+				if (target.getAttribute('data-controls') == 'next') {
+
+					ul.style.transform = 'translateX('+ -width + 'px)'; // сдвигаем ul влево на ширину первого li
+					var cloneFirst = ul.firstElementChild.cloneNode(true); // клонируем первый li, кторый уже уехал влево и не виден
+					ul.appendChild(cloneFirst); // вставляем склонированный первый элемент в конец ul
+					ul.removeChild(ul.firstElementChild); // удаляем первый элемент, который уже уехал влево, из ul
+					ul.style.transform = 'translateX('+ (-width + width) + 'px)'; //возвращаем ul в 0px
+					
+				};
+
+				if (target.getAttribute('data-controls') == 'prev') {
+					var cloneLast = ul.lastElementChild.cloneNode(true); // клонируем последний li
+					ul.style.transform = 'translateX('+ width + 'px)'; // сдвигаем ul вправо на ширину последнего li
+					ul.insertBefore(cloneLast, ul.firstElementChild); // вставляем склонированный последний элемент в начало ul
+					ul.removeChild(ul.lastElementChild); // удаляем последний элемент, который уже уехал вправо, из ul
+					ul.style.transform = 'translateX('+ (width - width) + 'px)'; //возвращаем ul в 0px
+				}
+			}
 
 			/*через insertAdjacentElement все отлично работает без сдвигов*/
 
@@ -105,34 +124,7 @@
 				}
 			}*/
 
-			/*через клонирование первого элемента и сдвиг с помощью translate*/
-
-			function handler(e) {
-				var target = e && e.target || e.srcElement;
-				if (target.getAttribute('data-controls') == 'next') {
-					
-					var cloneFirst = ul.firstElementChild;
-					var a = -width+'px';
-					//ul.style.height = a;
-					ul.style.transform = 'translateX(a)';
-					console.log(a);
-
-					//transform: translateX(-200px);
-				};
-
-
-
-
-
-
-				if (target.getAttribute('data-controls') == 'prev') {
-
-					var cloneLast = ul.lastElementChild;
-					ul.insertAdjacentElement('afterBegin', cloneLast);
-				}
-			}
-
-	//})();
+	})();
 	</script>
 </body>
 </html>
