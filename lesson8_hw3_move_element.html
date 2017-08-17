@@ -1,0 +1,52 @@
+﻿ <!-- создайте div, при клике на него, div начинает двигаться вправо, при клике на кнопку - останавливается, при попадании div к краю окна, он переходит к началу окна. -->
+ <!DOCTYPE html>
+<html >
+<head>
+    <meta charset="UTF-8">
+    <title>HomeWork</title>
+    <style type="text/css">
+    	.move {
+    		width: 70px;
+    		height: 70px;
+    		background-color: orange;
+    		position: relative;
+    	}
+    	button {
+    		margin-top: 10px;
+    	}
+    </style>
+</head>
+<body>
+    <div class="move"></div>
+    <button>stop moving</button>
+
+	<script type="text/javascript">
+	var move = document.querySelector('.move'),
+		stop = document.querySelector('button'),
+		leftEl = move.getBoundingClientRect().left,
+		limit = window.innerWidth, // нашла в объекте window, определяет ширину окна
+		time;
+
+		move.addEventListener('click', moveFunc);
+		
+		function moveFunc() {
+			var time = setTimeout(function(){
+				if (leftEl < limit) {
+					move.style.left = leftEl + 'px';
+					leftEl++;
+					moveFunc();
+				} else {
+					leftEl = 0;
+					moveFunc();
+				}
+			}, 10);
+
+			stop.addEventListener('click', stopFunc);
+
+			function stopFunc(){ 
+  				clearTimeout(time);
+  			}
+		};
+	</script>
+</body>
+</html>
