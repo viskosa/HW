@@ -1,0 +1,60 @@
+﻿<!DOCTYPE html>
+<html >
+<head>
+    <meta charset="UTF-8">
+    <title>HomeWork</title>
+    <style type="text/css">
+    	.drag {
+    		/* margin: 30px 30px; */
+    		/* border: 1px solid green; */
+    		width: 50px;
+    		height: 50px;
+    		background-color: yellowgreen;
+    		position: relative;
+    	}
+
+    </style>
+</head>
+<body>
+<!--1. Перетаскиваемый элемент (блок DIV в нашем случае) должен быть абсолютно позиционированным;
+	2.После нажатия на клавишу мыши, когда курсор находится над нужным нам элементом, запоминаем разницу координат нашего перемещаемого окна и указателя мыши;
+	3. Если клавиша не была отпущена, и пользователь перемещает указатель мыши, то получаем новые координаты окна, просто суммируя запомненную разницу координат и новые координаты указателя мыши. -->
+
+    <!-- drag - создать квадрать размером 50х50 и сделать возможность перетаскивать его по документу; -->
+    <!-- создайте div, при клике на него, div начинает двигаться вправо, при клике на кнопку - останавливается, при попадании div к краю окна, он переходит к началу окна. -->
+    <div class="drag"></div>
+
+	<script type="text/javascript">
+		var drag = document.querySelector('.drag');
+
+		drag.addEventListener('mousedown', handlerDown); // действия по нажатию левой кнопки мыши
+
+		function handlerDown(e) {
+			var startMouseX = e.clientX, // координата мыши по Х относительно вьюпорта
+				startMouseY = e.clientY,  // координата мыши по Y относительно вьюпорта
+				dragTop = drag.getBoundingClientRect().top, // текущее значение top у квадрата
+				dragLeft = drag.getBoundingClientRect().left; // текущее значение left у квадрата
+
+				deltaX = startMouseX - dragLeft; // разница между координатами мыши и квадрата
+				deltaY = startMouseY - dragTop; //
+
+				window.addEventListener('mousemove', handlerMove); // действия по движению мыши
+				window.addEventListener('mouseup', handlerUp); // действия по отпусканию левой кнопки мыши
+
+				function handlerMove(e) { 
+					var endMouseX = e.clientX, // собирает координаты мыши все время, пока происходит движение
+						endMouseY = e.clientY;
+
+						drag.style.left = endMouseX - deltaX + 'px'; // и сразу же на лету стилизует 
+						drag.style.top = endMouseY - deltaY + 'px';
+				}
+
+				function handlerUp() {
+					window.removeEventListener('mousemove', handlerMove); // снимаем стилизацию квадратика по отпусканию мыши
+				}
+
+		}
+
+	</script>
+</body>
+</html>
