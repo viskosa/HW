@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<!-- создать главный блок и блок превью, в котором находятся 4 картинки. При загрузке странички сразу же в главный блок загружается первая картинка из превью. По клику на каждую маленькую картинку в главном блоке меняется картинка на ту, по которой кликнули -->
+<html>
+<head>
+	<title></title>
+	<style type="text/css">
+		.main {
+			padding: 10px;
+			border: 1px solid #000;
+			margin-bottom: 10px;
+			}
+		.main img {
+			width: 100%;
+		}
+		.preview img {
+			width: 25%;
+			padding: 10px;
+			box-sizing: border-box;
+			border: 1px solid #000;
+		}
+
+	</style>
+</head>
+<body>
+	<div class="main"></div>
+	<div class="preview">
+		<img src="images_slider3_oop/1.jpg"><img src="images_slider3_oop/2.jpg"><img src="images_slider3_oop/3.jpg"><img src="images_slider3_oop/4.jpg">
+	</div>
+	<script type="text/javascript">
+		function Slider(main, preview) {
+			this.main = main;
+			this.preview = preview;
+			this.init();
+			this.preview.addEventListener('click', this.generate.bind(this));
+		}
+
+		Slider.prototype.init = function(){
+			var src = this.preview.firstElementChild.src,
+				pattern = '<img src = "' + src + '"/>';
+
+			this.main.insertAdjacentHTML('beforeend', pattern);
+		}
+
+		Slider.prototype.generate = function(e){
+			var target = e && e.target || e.srcElement;
+			this.main.firstElementChild.src = target.src;
+		}
+
+		window.addEventListener('DOMContentLoaded', createSlider);
+		function createSlider(){
+			new Slider(document.querySelector('.main'), document.querySelector('.preview'))
+		} 
+	</script>
+</body>
+</html>
