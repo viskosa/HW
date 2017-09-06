@@ -1,0 +1,79 @@
+﻿<!-- провалидировать все поля формы. Если поле проходит валидацию - покрасить его зеленым, если нет - красным. Если все поля прошли валидацию - вывести результат в виде гет-запроса: yourName=1&email=2&phone=3. Если какое-то из полей не проходит валидацию - выводим просто false -->
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<style type="text/css">
+		input {
+			display: block;
+			margin-bottom: 10px;
+		}
+		textarea {
+			max-width: 100%;
+		}
+	</style>
+</head>
+<body>
+	<form action="#">
+		<input type="text" name="yourName" placeholder="Введите имя">
+		<input type="text" name="email" placeholder="Введите свой e-mail">
+		<input type="text" name="phone" placeholder="Введите номер телефона">
+		<textarea></textarea>
+		<input type="submit" name="submitter">
+	</form>
+
+	<script type="text/javascript">
+		var form = document.querySelector('form');
+			//buttonSubmit = document.querySelector('input[name="submitter"]');
+
+		var pattern = { //объект с регвыражениями для проверки данных, введенных в соответствующие поля. Важно, чтобы ключи назывались так же, как аттрибуты name у инпутов
+			yourName: /\D\S/,
+			email: /\b[a-z0-9._]+@[a-z0-9.-]+\.[a-z]{2,4}\b/i,
+			phone: /\d{6,10}/,
+			text: /^[A-za-zА-Яа-я0-9_-]/
+		}
+
+		//var answer = {};
+		var answer = []; // создаем пустой массив
+
+		function myValidate(form, pattern){
+			for (i=0; i<form.elements.length-2; i++){
+				(function(i){
+					var elName = form.elements[i].getAttribute('name'), // yourName
+						patt = pattern[elName], // забрали первое регвыражение из объекта pattern
+						res = patt.test(form.elements[i].value);// проверили, проходит ли введенное в инпут значение паттерн
+
+					if (res===false) {
+						form.elements[i].style.background = 'red' //если нет - красим красным
+					} else {
+						form.elements[i].style.background = 'green'; // если проходит - красим зеленым
+						var xxx = elName + '=' + form.elements[i].value; //формируем строчку из name=value
+						answer.push(xxx); // и пушим ее в пустой массив answer
+						//answer[elName] = form.elements[i].value; // а можем записывать не в массив, а в объект: записали в пустой объект пару ключ-значение
+						console.log(answer);
+					}
+				})(i);
+			} // end of for
+		} // end of function myValidate
+
+		function out(){
+			if (answer.length == form.elements.length-2) { // если в массив записалось столько же значений, сколько было итераций проверки полей формы, 
+				var result = answer.join('&'); // то приводим полученный массив answer в строку и разделяем значения амперсандом
+				form.submit()//ну и можно отправить форму на сервер
+			} else {
+				var result = false; //если же в массив записалось меньше значений, чем было итераций
+				for (i=0; i<=answer.length; i++){ //то идем по массиву в цикле
+					answer.pop(); //и очищаем его, т.к. при исправлении каких-то данных в инпутах в массив снова записываются те значения, которые уже попали туда в первый раз
+				}
+			}
+			alert(result); //ну и выводим алерт в нужном нам виде get-запроса yourName=1&email=2&phone=3
+		}
+
+		form.addEventListener('submit', function(e){
+			e.preventDefault();
+			myValidate(form, pattern);
+			out();
+		});
+	</script>
+</body>
+</html>
