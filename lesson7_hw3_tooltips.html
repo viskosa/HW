@@ -1,5 +1,4 @@
-﻿   <!-- Доработайте пример 004_Attr_Tech.html таким образом, чтобы при наведении на span элементы, подсказка сплыва под ними, а не в модальном окне. Используйте addEventListener -->
-
+﻿   <!-- Доработайте пример 004_Attr_Tech.html таким образом, чтобы при наведении на span элементы, подсказка всплывала под ними, а не в модальном окне. Используйте addEventListener -->
 
 <!DOCTYPE HTML>
 <html>
@@ -29,7 +28,6 @@
   		left: 50%;
   		margin-left: -8px;
   		top: -4px;
-
   	}
   	span {
   		position: relative;
@@ -45,91 +43,56 @@
     <span data-tooltip="для">для</span> 
     <span data-tooltip="подсказки">подсказки</span>
     <span>JavaScript</span>
-</div>
+    <span data-tooltip="очень_длинное_слово">конец</span>
+  </div>
 
 <script>
-	window.onload = function () {
+(window.DOMContentLoaded = function () {
 	var span = document.querySelectorAll('span');
 
 		for (i=0; i<span.length; i++) {
 
-      //(function (i) {  // пыталась сделать замыкание
-			var inner = span[i].getAttribute('data-tooltip'),
-				pattern = "<p> это слово '" + inner + "'</p>";
-				//console.log(inner);
-				if (!inner) {
-					return;
-				};
-				span[i].insertAdjacentHTML('beforeEnd', pattern);
+      (function (i) {  // замыкание
+  			var inner = span[i].getAttribute('data-tooltip'),
+  				pattern = "<p> вы видите слово '" + inner + "'</p>";
+  				//console.log(pattern);
+  				if (!inner) {
+  					return;
+  				};
+  				span[i].insertAdjacentHTML('beforeEnd', pattern);
 
-				span[i].addEventListener('mouseenter', display);
-				span[i].addEventListener('mouseleave', hide);
+  				span[i].addEventListener('mouseenter', display);
+  				span[i].addEventListener('mouseleave', hide);
 
-        var spanWidth = span[i].clientWidth; // берется последнее значение i , а не каждое!!!
-        console.log ('ширина спана spanWidth = ' + spanWidth);
+          var spanWidth = span[i].clientWidth; // если не сделать замыкание, в spanWidth заносится последнее значение i , а не каждое!!!
+          console.log ('ширина ' + i + '-го спана spanWidth = ' + spanWidth);
 
-      //});(i);
-
-				function display(e){
-					var target = e && e.target || e.srcElement;
-						child = target.lastElementChild;
-						child.style.cssText = "display: block; font-size: 18px; font-style: italic";
-            var pWidth = child.clientWidth;
-            console.log ('ширина тултипа pWidth = ' + pWidth);
-            centerFunc(pWidth, spanWidth, child);
-				};
-
-				function hide(e) {
-					var target = e && e.target || e.srcElement;
-						child = target.lastElementChild;
-						child.style.display = 'none';
-				};
+  			function display(e){
+  					var target = e && e.target || e.srcElement;
+  						child = target.lastElementChild;
+  						child.style.cssText = "display: block; font-size: 18px; font-style: italic";
+              var pWidth = child.clientWidth;
+              console.log ('ширина тултипа pWidth = ' + pWidth);
+              centerFunc(pWidth, spanWidth, child);
+  			};
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            
+  			function hide(e) {
+  					var target = e && e.target || e.srcElement;
+  						child = target.lastElementChild;
+  						child.style.display = 'none';
+  			};
 
         function centerFunc(pWidth, spanWidth, child) {
-          var difference = - (pWidth/2 - spanWidth/2);
-          child.style.left = 'difference + "px"';
-          console.log('разница (pWidth/2 - spanWidth/2) = ' + difference);
-        };
+            var difference = - (pWidth/2 - spanWidth/2);
+            console.log(pWidth);
+            console.log(spanWidth);
+            child.style.left = difference + "px";
+            console.log('разница (pWidth/2 - spanWidth/2) = ' + difference);
+        }
 
-		}
-	}();
-
+      })(i) // конец замыкания
+    }  // конец фор-а
+})()
 </script>
 </body>
 </html>
-
-
-      <!-- don't look here -->
-
-
-       <!--  var p = document.querySelectorAll('p');
-       //console.log (p);
-         for (j=0; j<p.length; j++) {
-           if (p[j].style.display=='block') {
-             var pWidth = p[j].clientWidth;
-             console.log (pWidth);
-           } else {
-             console.log('hjgkjgbj');
-           };
-           
-         };
-       
-       
-       
-           /*window.onload = function () {
-             
-             var mainDiv = document.getElementById("main-div");
-             
-             mainDiv.onmouseover = function (e) {
-       
-       var target = e && e.target || window.event.srcElement;
-       
-       var dataToggleId = target.getAttribute('data-tooltip');
-       
-       if (!dataToggleId) {
-           return;
-       };
-       
-       alert(dataToggleId);
-           };
-       };*/ -->
