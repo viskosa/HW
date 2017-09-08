@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<style type="text/css">
+		input {
+			display: block;
+			margin-bottom: 10px;
+		}
+		textarea {
+			max-width: 100%;
+		}
+	</style>
+</head>
+<body>
+	<form action="#">
+		<input type="text" name="yourName" placeholder="Введите имя">
+		<input type="text" name="email" placeholder="Введите свой e-mail">
+		<input type="text" name="phone" placeholder="Введите номер телефона">
+		<textarea></textarea>
+		<input type="submit" name="submitter">
+	</form>
+
+	<script type="text/javascript">
+		var form = document.querySelector('form');
+
+		var pattern = { 
+			yourName: /\D\S/,
+			email: /\b[a-z0-9._]+@[a-z0-9.-]+\.[a-z]{2,4}\b/i,
+			phone: /\d{6,10}/,
+			text: /^[A-za-zА-Яа-я0-9_-]/
+		}
+
+		var answer = []; 
+
+		function myValidate(form, pattern){
+			for (i=0; i<form.elements.length-2; i++){
+				(function(i){
+					var elName = form.elements[i].getAttribute('name'), 
+						patt = pattern[elName], 
+						res = patt.test(form.elements[i].value);
+
+					if (res===false) {
+						form.elements[i].style.background = 'red' 
+					} else {
+						form.elements[i].style.background = 'green'; 
+						var xxx = elName + '=' + form.elements[i].value; 
+						answer.push(xxx); 
+						console.log(answer);
+					}
+				})(i);
+			} // end of for
+		} // end of function myValidate
+
+		function out(){
+			if (answer.length == form.elements.length-2) { 
+				var result = answer.join('&'); 
+				form.submit()
+			} else {
+				var result = false; 
+				for (i=0; i<=answer.length; i++){ 
+					answer.pop(); 
+				}
+			}
+			alert(result); 
+		}
+
+		form.addEventListener('submit', function(e){
+			e.preventDefault();
+			myValidate(form, pattern);
+			out();
+		});
+	</script>
+</body>
+</html>
