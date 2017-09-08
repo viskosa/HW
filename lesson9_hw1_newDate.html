@@ -1,0 +1,37 @@
+<!-- Создайте функцию, которая возвращает день недели для даты. -->
+
+<!-- День нужно возвратить в формате - понедельник имеет номер 1, вторник номер 2, …, воскресенье - номер 7. -->
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+</head>
+<body>
+	<script type="text/javascript">
+		var sendDate = prompt('Введите любую дату в виде "год" - "месяц" - "число"', '');
+		var date = new Date(sendDate),
+			day = date.getDay();
+
+			if (day==0) {
+				day=7;
+				var dayWord = 'воскресенье'
+			} else if (day==1) {
+				var dayWord = 'понедельник'
+			} else if (day==2) {
+				var dayWord = 'вторник'
+			} else if (day==3) {
+				var dayWord = 'среда'
+			} else if (day==4) {
+				var dayWord = 'четверг'
+			} else if (day==5) {
+				var dayWord = 'пятница'
+			} else {
+				var dayWord = 'суббота'
+			};
+
+		console.log(date);
+		alert('Это ' + day + ' день недели, ' + dayWord);
+
+	</script>
+</body>
+</html>
