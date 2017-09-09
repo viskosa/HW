@@ -1,0 +1,55 @@
+    <!-- Создайте страницу которая запрашивает имя пользователя, если пользователь вводит "Admin" либо "admin" он попадает на страницу, которая оповещает его о том что " Пользоваетль Admin(не статическая строка, а данные что ввел пользователь) вошел в систему" а рядом разместите кнопку "Выход" которая вернет пользователя к модальному окну ввода логина. Реализуйте код как для куки так и для localstorage. -->
+   <!DOCTYPE html>
+   <html>
+   <head>
+      <title></title>
+   </head>
+   <body>
+      <script type="text/javascript">
+
+         function askLogin(){
+            var loginKey = prompt('Enter username, please', ''); 
+            if (loginKey=='admin'||loginKey=='Admin'){ //если пользователь внес admin или Admin
+               localStorage.login = loginKey; //то установить в локалсторедж
+               showSuccess();
+            } else if (loginKey===null) {
+               return
+            } else {
+               alert('Incorrect name. Try again');
+               askLogin();
+            }
+         };
+
+         function startPage(){
+            if (localStorage.getItem('login')=='admin'||localStorage.getItem('login')=='Admin'){
+               alert('You entered as ' + localStorage.getItem('login'));
+            } else {
+               askLogin(); 
+            }
+         };
+
+         function showSuccess(){
+            var user = localStorage.getItem('login'),
+                pattern = '<p id = "paragraph">Congratulations! User ' +  user + ' successfully entered the system!</p><br/><button id = "logout">Exit</button>',
+                body = document.querySelector('body');
+
+            body.insertAdjacentHTML('afterBegin', pattern);
+            document.querySelector('#logout').addEventListener('click', exit);
+         }
+
+         function exit(){
+            var paragraph = document.querySelector('#paragraph'),
+                logout = document.querySelector('#logout');
+
+            paragraph.style.display = 'none';
+            logout.style.display = 'none';
+            localStorage.removeItem('login');
+            location.reload();
+         }
+
+         startPage();
+
+      </script>
+   </body>
+   </html>
+
