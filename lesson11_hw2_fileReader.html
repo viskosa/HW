@@ -1,0 +1,75 @@
+﻿<!-- Фором загрузить сразу несколько изображений. Выбрать в инпуте 5 картинок, нажать ок и они сразу же выстраиваются в превьюшки. Если какая-то превью не нравится - можно ее удалять и только потом нажать кнопку save и отправить данные на сервер. Нужно запоминать состояние, что ты удаляешь. Сделать какой-то state, который контролирует setting binding -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<style type="text/css">
+		li {
+			display: inline-block;
+			width: 200px;
+			margin-left: 1px;
+		}
+		img {
+			max-width: 100%;
+		}
+		ul {
+			display: inline-block; /* если оставить display: block то если загружено мало картинок, справа от них остается пустой ul, он тянется на всю ширину, а так как addEventListener повешен на ul, то при щелчке на нем срабатывает 67 строка array.push(li[i]); */
+		}
+	</style>
+</head>
+<body>
+	<input type="file" multiple>
+	<ul>
+		
+	</ul>
+
+	<script>
+		var input = document.querySelector('input'),
+			   ul = document.querySelector('ul');
+
+		input.addEventListener('change', read);
+
+		function read(){
+			files = event.target.files;// вернул объект с объектами всех вложенных файлов
+			console.log(files);
+
+			for (i=0; i<files.length; i++) {
+				(function(){
+					var reader = new FileReader();  // Создаем новый объект, он вспомогательный, чтобы можно было перевести картинку в base64. Если вынести глобально - не работает
+
+					reader.readAsDataURL(files[i]); //на объекте FileReader применяем метод readAsDataURL и передаем в него файл, который нужно перевести в base64
+
+					reader.onloadend = function () {
+						var res = reader.result; //свойство result объекта FileReader, выдает картинку в формате base64
+						var pattern = '<li><img src="' + res + '"></li>'; // ну и расставляем превьюхи 
+						ul.insertAdjacentHTML('beforeEnd', pattern);
+		  			}
+		  		})(i);
+			} //  end of for
+
+				//удаление картинок по клику
+			var ul = document.querySelector('ul');
+
+			ul.addEventListener('click', del);
+
+			function del(e){
+				var target = e && e.target || e.srcElement,
+					array = [];
+
+				if (target.src){ //если у таргета, куда щелкнули, есть атрибут src, т.е. это картинка
+					target.parentNode.style.display = 'none'; // то скрываем родителя картинки, т.е. li
+				}
+				// удаленные li загоняем в массив:
+				for (i=0; i<ul.children.length; i++){
+					var li = document.querySelectorAll('li');
+					if (li[i].style.display === 'none'){ // если у li установлен дисплей нан, то это удаленный элемент и его нужно загнать в массив
+						array.push(li[i]);
+					}
+				}	
+				console.log(array);	
+			} // end of function del
+		}  // end of function read
+	</script>
+</body>
+</html>
