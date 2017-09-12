@@ -1,0 +1,74 @@
+   <!-- Создайте страницу которая запрашивает имя пользователя, если пользователь вводит "Admin" либо "admin" он попадает на страницу, которая оповещает его о том что " Пользоваетль Admin(не статическая строка, а данные что ввел пользователь) вошел в систему" а рядом разместите кнопку "Выход" которая вернет пользователя к модальному окну ввода логина. Реализуйте код как для куки так и для localstorage. -->
+   <!DOCTYPE html>
+   <html>
+   <head>
+   	<title></title>
+   </head>
+   <body>
+      <script type="text/javascript">
+
+      var cookieName="login";
+
+          function askLogin(){
+            var loginKey = prompt('Enter username, please', ''); 
+            if (loginKey=='admin'||loginKey=='Admin'){ //если пользователь внес admin или Admin
+               document.cookie = 'login =' + loginKey +';'; //то установить в cookie login=admin
+               showSuccess();   
+            } else if (loginKey===null) { //если юзер ничего не ввел - ретерн
+               return
+            } else {  //если ввел что-то другое, а не admin или Admin - алерт и заново спросить имя
+               alert('Incorrect name. Try again');
+               askLogin();
+            }
+         };
+
+         function startPage(){ //функция проверяет при загрузке страницы, установлены ли какие-то куки
+            user = getCookies();
+
+            if (user=='admin'||user=='Admin'){ //если это админ
+               alert('You entered as ' + user);
+            } else {
+               askLogin(); 
+            }
+         };
+
+         function getCookies(){ // функция парсит куки и возвращает значение логина
+            var allcookies = document.cookie, //берем все куки с документа
+                pos = allcookies.indexOf(cookieName + "="),  //определяем точку перед cookieName. Равно дописали, чтоьы в куках искать строку "login="
+                start = pos + cookieName.length + 1, //теперь находим точку после равно в выражении "login=". +1 - это прибавили равно к длине слова login
+                end = allcookies.indexOf(';', start); //находим конечную точку - ищем ; со старта
+            if (end==-1){ //если indexOf вернул -1, т.е. не нашел точки с запятой
+               end = allcookies.length; //то это последняя кука и значит считать ендом длину всей строки кук
+            }
+            var value = allcookies.substring(start, end); // вырезаем то, что получилось(admin или Admin)
+            return decodeURIComponent(value); // и возвращаем декодированное значение
+         }
+
+         function showSuccess(cookieName){ //ф-ция берет значение логина из кук (admin или Admin) и рисует на странице параграф и кнопку выхода
+            var user = getCookies();
+                pattern = '<p id = "paragraph">Congratulations! User ' +  user + ' successfully entered the system!</p><br/><button id = "logout">Exit</button>',
+                body = document.querySelector('body');
+
+            body.insertAdjacentHTML('afterBegin', pattern);
+            document.querySelector('#logout').addEventListener('click', exit);
+         }
+
+         function exit(){ //фунцкия выхода берет значение логина из кук (admin или Admin), удаляет куки и скрывает нарисованный параграф и кнопку
+            var paragraph = document.querySelector('#paragraph'),
+                logout = document.querySelector('#logout'),
+                user = getCookies();
+
+            paragraph.style.display = 'none';
+            logout.style.display = 'none';
+
+            document.cookie = 'login =' + user +';' + 'max-age =' + 0 +';';
+            location.reload();
+         }
+
+         startPage(); //эта функция запускается первой при загрузке страницы 
+         
+
+      </script>
+   </body>
+   </html>
+
