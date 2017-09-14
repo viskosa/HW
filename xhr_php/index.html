@@ -1,0 +1,74 @@
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>JavaScript and PHP AJAX</title>
+    <script>
+        function showHint(str) {
+          if (str.length === 0) { 
+            document.getElementById("txtHint").innerHTML = "";
+            return;
+          }
+
+          var xmlhttp = new XMLHttpRequest(),
+              txt = document.getElementById("txt1"),
+              hint = document.getElementById("txtHint");
+
+          xmlhttp.onreadystatechange = function() {  
+            if (xmlhttp.readyState === 4 && xmlhttp.status === 200) {  // когда от сервера придет ответ  
+              var xxx = xmlhttp.responseText; //получаем текст ответа от сервера в виде строки
+              answer = xxx.split(', '); //разбиваем строку по запятой и формируем массив answer
+              console.log(answer);
+              createOptions(answer); //запускаем ф-цию, создающую у тега select вложенные теги option
+            }
+
+          function createOptions(answer){
+            var children = hint.querySelectorAll('option');// берем детей у тега select(все его теги option)
+            if (children) { // если они уже есть
+              for (i=0; i<children.length; i++){ //то удалим их, чтобы не мешались
+                hint.removeChild(children[i])
+              }
+            }
+            for (i=0; i<answer.length; i++){ // создаем теги option и кладем в них данные из массива, который мы сделали из ответа сервера
+              var patt = '<option>' + answer[i] + '</option>';
+                hint.insertAdjacentHTML('afterbegin', patt);
+              }
+              hint.setAttribute('size', answer.length); // чтобы select сразу отображался раскрытым, добавляем ему атрибут size, равный количеству вставленных тегов option. Size - стандартный атрибут тега select
+            }            
+          }
+
+          hint.addEventListener('click', setInner); //вешаем обработчик на select
+
+          function setInner(e){
+            var target = e && e.target || e.srcElement;
+            if (target.matches('option')) {  // если щелкнули на option 
+              txt.value = target.innerHTML;  // то в результирующее поле Имя вставляем содержимое опшена, на который щелкнули
+              target.setAttribute('selected', ''); // устанавливаем опшену атрибут selected, по стандарту он без значения, но т.к. метод setAttribute требует 2 атрибута, втоорым передаем пустое значение
+              hint.setAttribute('size', 0);  // и схлопываем селект до одной строчки
+            } else {  // иначе если щелкнули не на опшен, а на сам селект (это случается после того, как пытаешься поменять в селекте выбранное значение)
+              var ch = target.children; // то берем у селекта всех детей (опшены)
+              for (i=0; i<ch.length; i++){
+                if (ch[i].selected) { // ищем среди них тот, кого выбрали, т.е. у кого атрибут selected
+                  txt.value = ch[i].innerHTML;  // то в результирующее поле Имя вставляем содержимое опшена, на который щелкнули
+                }
+              }
+            }
+          }
+
+          xmlhttp.open("GET", "gethint.php?q="+str, true); //будем отправлять методом get на файл gethint.php, передадим ему переменную q, равную str, и все это асинхронно
+          xmlhttp.send(); // отправили запрос
+        }
+    </script>
+</head>
+<body>
+
+  <h3>Введите текст:</h3>
+  <form action="" method="GET"> 
+    Имя: <input type="text" id="txt1" onkeyup="showHint(this.value)"/>
+  </form>
+  <form action="#" style="position: relative">Подсказки: 
+       <select id="txtHint" style="position: absolute; margin-left: 5px">  
+      </select> 
+
+  </form> 
+</body>
+</html>
