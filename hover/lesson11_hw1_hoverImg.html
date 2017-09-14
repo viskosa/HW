@@ -1,0 +1,84 @@
+﻿<!-- 
+    1.) Реализуйте hover изображений с помощью Javascript.
+    2.) Добавьте второй изображение при помощи JavaScript. При клике на изображение откройте его в полном размере.
+    3.) Выведите в рамзетку альтернативный текст для картинок.
+ -->
+ <!DOCTYPE html>
+ <html>
+ <head>
+ 	<title></title>
+ </head>
+ <body>
+ 	<button id = "add" style = "display:block; margin-bottom: 10px">Add image</button>
+ 	<p id = "alts" style = "display:block; border: 1px solid black"></p>
+ 
+ <img src="3.jpg" alt = "my_funny_dog" width = "200px">
+
+ <script type="text/javascript">
+ 	var newImg = new Image(200);
+ 	newImg.src = '1.jpg';
+ 	newImg.setAttribute('alt', 'my_lovely_dog');
+ 	document.body.appendChild(newImg);
+
+ 	newImg.addEventListener('mouseenter', scale);
+ 	newImg.addEventListener('mouseleave', unscale);
+
+ 	function scale(){
+ 		this.src = '3.jpg';
+ 		this.style.cssText = 'transform:scale(2); transition: all 1s ease ';
+ 	}
+
+ 	function unscale(){
+ 		this.src = '1.jpg';
+ 		this.style.cssText = 'transform:scale(1); transition: all 1s ease ';
+ 	}
+
+ 	var add = document.querySelector('#add');
+ 	add.addEventListener('click', addImg);
+
+ 	function addImg(){
+ 		var newImg2 = new Image(200);
+ 		newImg2.src = '2.jpg';
+ 		newImg2.alt = 'my_dog';
+ 		document.body.appendChild(newImg2);
+ 		newImg2.addEventListener('click', toggle);
+ 		attr();
+
+ 		//так тоже работает
+ 		/*function toggle(){
+ 			if(newImg2.hasAttribute('style')){
+ 				newImg2.removeAttribute('style');
+ 			} else {
+ 				newImg2.style.cssText = 'width:100%';
+ 			}*/	
+ 		}
+
+ 	function toggle(e){
+ 		var target = e && e.target||e.srcElement;
+
+ 		if(target.hasAttribute('style')){
+ 			target.removeAttribute('style');
+ 		} else {
+ 			target.style.cssText = 'width:100%';
+ 		}
+ 	}
+
+window.addEventListener('load', attr);
+
+function attr(){
+	var array = [],
+ 		allImages = document.images,
+		inner = document.querySelector('#alts');
+
+ 	for(i=0; i<allImages.length; i++){
+ 		var allAlts = allImages[i].alt;
+ 		array.push(allAlts);
+ 	}
+
+ 	var x = array.join(', ');
+ 		inner.innerHTML = x;
+}
+ </script>
+ 	
+ </body>
+ </html>
