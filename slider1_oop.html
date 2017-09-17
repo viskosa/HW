@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<style>
+	.main {
+		width:200px;
+		height:200px;
+		background-color: brown;
+		border: 1px solid red;
+		overflow: hidden;
+	}
+	ul {
+		position: relative;
+		background-color: yellow;
+		padding: 0;
+		margin: 0;
+		width: 1500px;
+		border: 1px dashed blue;
+	}
+	ul:after {
+		display: block;
+		content:'';
+		height:0;
+		clear: both;
+	}
+	li {
+		width: 200px;
+		height: 200px;
+		display: inline-block;
+		font-size: 24px;
+		color: #fff;
+		float:left;
+	}
+	.li_1 {
+		background-color: green;
+	}
+	.li_2 {
+		background: yellowgreen;
+	}
+	.li_3 {
+		background: pink;
+	}
+	.li_4 {
+		background: orange;
+	}
+	.li_5 {
+		background: #ccc;
+	}
+	input {
+		margin-top: 10px;
+	}
+
+	
+	</style>
+</head>
+<body>
+	<div class="main">
+		<ul>
+			<li class="li_1">1</li>
+			<li class="li_2">2</li>
+			<li class="li_3">3</li>
+			<li class="li_4">4</li>
+			<li class="li_5">5</li>
+		</ul> 
+	</div>
+	<input type="button" value="NEXT" oncklick='myFunction'>
+
+
+	<script>
+
+	function Slider(ul, button){
+		this.ul = ul;
+		this.button = button;
+
+		this.allChildrenCount = this.ul.children.length,//5
+		this.width = this.ul.firstElementChild.clientWidth,
+		this.commonChildrenWidth = this.allChildrenCount*this.width,//1000
+		this.limit = - (this.commonChildrenWidth - this.width),//максимум пикселей, на сколько можно подвинуть
+		
+		this.move = 0;
+		this.button.addEventListener('click', this.handler.bind(this));
+	}
+
+	Slider.prototype = new Helper;
+
+	Slider.prototype.handler = function(){
+		if (this.move==this.limit){
+				console.log('end of ul');
+				return;
+			};
+			if (this.ul.hasAttribute('style')) {
+				this.move = parseInt(this.ul.style.left) - this.width;
+				this.moveFunc();
+			} else {
+				this.move = -this.width;
+				this.moveFunc();
+			}
+	}
+
+
+	function Helper(){};
+
+	Helper.prototype.moveFunc = function(){
+			this.ul.style.cssText = "left:"+ this.move +'px;';
+		}
+	
+
+
+	new Slider(document.querySelector('ul'), document.querySelector('input'));
+	</script>
+</body>
+</html>
